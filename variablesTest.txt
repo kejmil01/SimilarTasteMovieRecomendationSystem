@@ -1,0 +1,107 @@
+MIN_CORELATION_FACTOR1 = 0.72
+MIN_CORELATION_FACTOR2 = 0.76
+MIN_CORELATION_FACTOR3 = 0.80
+MIN_TASTE_SIMILAR_USERS = 3
+MIN_TASTE_SIMILAR_USER1 = 5
+MIN_MOVIES_TO_TEST = 4
+|||||||||||||||| SIM |||||||||||||||
+10711
+15600
+0.6866025641025642
+|||||||||||||||| AVG |||||||||||||||
+2881
+4400
+0.6547727272727273
+|||||||||||||||| ALL |||||||||||||||
+13592
+20000
+0.6796
+||||||||||||||||||||||||||||||||||||
+time: 17.673478841781616
+
+MIN_CORELATION_FACTOR1 = 0.72
+MIN_CORELATION_FACTOR2 = 0.76
+MIN_CORELATION_FACTOR3 = 0.80
+MIN_TASTE_SIMILAR_USERS = 4
+MIN_TASTE_SIMILAR_USER1 = 5
+MIN_MOVIES_TO_TEST = 4
+|||||||||||||||| SIM |||||||||||||||
+10561
+15303
+0.6901261190616219
+|||||||||||||||| AVG |||||||||||||||
+3063
+4697
+0.6521183734298488
+|||||||||||||||| ALL |||||||||||||||
+13624
+20000
+0.6812
+||||||||||||||||||||||||||||||||||||
+time: 17.879640102386475
+
+
+MIN_CORELATION_FACTOR1 = 0.72
+MIN_CORELATION_FACTOR2 = 0.76
+MIN_CORELATION_FACTOR3 = 0.80
+MIN_TASTE_SIMILAR_USERS = 5
+MIN_TASTE_SIMILAR_USER1 = 5
+MIN_MOVIES_TO_TEST = 4
+|||||||||||||||| SIM |||||||||||||||
+10548
+15241
+0.6920805721409357
+|||||||||||||||| AVG |||||||||||||||
+3096
+4759
+0.6505568396722
+|||||||||||||||| ALL |||||||||||||||
+13644
+20000
+0.6822
+||||||||||||||||||||||||||||||||||||
+time: 17.751533031463623
+
+
+MIN_CORELATION_FACTOR1 = 0.72
+MIN_CORELATION_FACTOR2 = 0.76
+MIN_CORELATION_FACTOR3 = 0.80
+MIN_TASTE_SIMILAR_USERS = 5
+MIN_TASTE_SIMILAR_USER1 = 6
+MIN_MOVIES_TO_TEST = 3
+|||||||||||||||| SIM |||||||||||||||
+10240
+14703
+0.6964565054750731
+|||||||||||||||| AVG |||||||||||||||
+3439
+5297
+0.6492354162733622
+|||||||||||||||| ALL |||||||||||||||
+13679
+20000
+0.68395
+||||||||||||||||||||||||||||||||||||
+time: 18.226869106292725
+
+
+MIN_CORELATION_FACTOR1 = 0.72
+MIN_CORELATION_FACTOR2 = 0.76
+MIN_CORELATION_FACTOR3 = 0.80
+MIN_TASTE_SIMILAR_USERS = 5
+MIN_TASTE_SIMILAR_USER1 = 7
+MIN_MOVIES_TO_TEST = 3
+|||||||||||||||| SIM |||||||||||||||
+9916
+14171
+0.6997389033942559
+|||||||||||||||| AVG |||||||||||||||
+3768
+5829
+0.6464230571281523
+|||||||||||||||| ALL |||||||||||||||
+13684
+20000
+0.6842
+||||||||||||||||||||||||||||||||||||
+time: 18.24888586997986
