@@ -8,6 +8,8 @@ import common
 import randomRS
 import averageRatingRS
 
+CHART_POINT_COUNT = 10;
+
 MIN_CORELATION_FACTOR1 = 0.7
 MIN_CORELATION_FACTOR2 = 0.76
 MIN_CORELATION_FACTOR3 = 0.82
@@ -226,7 +228,22 @@ def getTasteSimilarRSPrecisionRecall(base_udata_array, test_udata_array):
     return common.PrecisionRecallModel(precisionList, recallList)
 
 def showChart(dataAxis, returnModel, name):
-    plt.plot(dataAxis, returnModel.precision, 'r', dataAxis, returnModel.recall)
+    lenght = len(dataAxis)
+    pointInterval = int(lenght/(CHART_POINT_COUNT-1))
+    
+    pointDataAxis = []
+    pointPrecision = []
+    pointRecall = []
+    pointPrecisionRecall = []
+    
+    for i in range((CHART_POINT_COUNT-1)):
+        it = (i + 1)  * pointInterval
+        pointDataAxis.append(dataAxis[it])
+        pointPrecision.append(returnModel.precision[it])
+        pointRecall.append(returnModel.recall[it])
+        pointPrecisionRecall.append((returnModel.precision[it] + returnModel.recall[it])/2)
+
+    plt.plot(pointDataAxis, pointPrecision, 'ro', pointDataAxis, pointPrecisionRecall, "y", pointDataAxis, pointRecall, "go")
     plt.show()
     print(name + " " + str(returnModel.recall[len(returnModel.precision) - 1]))
     
