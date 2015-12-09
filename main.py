@@ -219,8 +219,8 @@ def getTasteSimilarRSPrecisionRecall(base_udata_array, test_udata_array):
 #    print("|||||||||||||||| SIM |||||||||||||||")
 #    print(summ2)
 #    print(count2)
-#    if(count2 != 0):
-#        print(summ2/count2)
+    if(count2 != 0):
+        print("Sim Only: " + str(summ2/count2))
 #    print("|||||||||||||||| AVG |||||||||||||||")
 #    print(summ1)
 #    print(count1)
