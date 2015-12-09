@@ -28,6 +28,24 @@ def loadUdata(filename):
            
         return array
         
+# loads data from u.data structured file to a two-dimensional (nd)array
+# {iterator: userId, movieId, rating, timestamp}
+def loadUdataWithTimestamp(filename):
+    with open(os.path.join(DIR_PATH, filename)) as file:
+        array = np.ndarray(shape=(0, 4), dtype=int)
+        count = 0
+        for row in file.readlines():
+        #sample row = 4	328	3	892001537
+           count = count + 1
+           array.resize((count, 4))           
+           sourceLines = row.split()
+           array[count - 1, 0] = int(sourceLines[0])
+           array[count - 1, 1] = int(sourceLines[1])
+           array[count - 1, 2] = int(sourceLines[2])
+           array[count - 1, 3] = int(sourceLines[3])
+           
+        return array
+        
 def getQuantizedRating(ratingValue):
     if(ratingValue > 3.0):
         return 1

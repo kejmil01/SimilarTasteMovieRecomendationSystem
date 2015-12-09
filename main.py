@@ -7,6 +7,7 @@ import time
 import common
 import randomRS
 import averageRatingRS
+import datasetGenerator
 
 CHART_POINT_COUNT = 10;
 
@@ -159,6 +160,7 @@ def getTasteSimilarRSPrecisionRecall(base_udata_array, test_udata_array):
     arrayWithAverageRatings = averageRatingRS.getAverageMoviesRatings(base_udata_array)
     
     currentUser = -1
+    similarTasteUsersDictionary = {}
     similarTasteUsers = None
 
     for i in range(len(test_udata_array)):
@@ -167,7 +169,7 @@ def getTasteSimilarRSPrecisionRecall(base_udata_array, test_udata_array):
         rating = test_udata_array[i][2]
         userBaseRatings = userGroupedTrainingData.get(userId)
         
-        print("count: " + str(count))
+#        print("count: " + str(count))
         
         if(userBaseRatings == None or len(userBaseRatings) < MIN_MOVIES_TO_TEST):
             f = averageRatingRS.getQuantizedAverageRecomendationPoint(arrayWithAverageRatings, rating, movieId)
@@ -176,7 +178,10 @@ def getTasteSimilarRSPrecisionRecall(base_udata_array, test_udata_array):
             count1 += 1
         else:
             if(userId != currentUser):
-                similarTasteUsers = getTasteSimilarUsers(userGroupedTrainingData, userBaseRatings, movieId, userId)
+                similarTasteUsers = similarTasteUsersDictionary.get(userId)
+                if(similarTasteUsers == None):
+                    similarTasteUsers = getTasteSimilarUsers(userGroupedTrainingData, userBaseRatings, movieId, userId)
+                    similarTasteUsersDictionary[userId] = similarTasteUsers
                 currentUser = userId
 
             ratingsCorelation3 = []
@@ -211,61 +216,72 @@ def getTasteSimilarRSPrecisionRecall(base_udata_array, test_udata_array):
         recallList.append(summ/finalCount)
         
             
-    print("|||||||||||||||| SIM |||||||||||||||")
-    print(summ2)
-    print(count2)
-    if(count2 != 0):
-        print(summ2/count2)
-    print("|||||||||||||||| AVG |||||||||||||||")
-    print(summ1)
-    print(count1)
-    print(summ1/count1)
-    print("|||||||||||||||| ALL |||||||||||||||")
-    print(summ)
-    print(count)
-    print(summ/count)
-    print("||||||||||||||||||||||||||||||||||||")
+#    print("|||||||||||||||| SIM |||||||||||||||")
+#    print(summ2)
+#    print(count2)
+#    if(count2 != 0):
+#        print(summ2/count2)
+#    print("|||||||||||||||| AVG |||||||||||||||")
+#    print(summ1)
+#    print(count1)
+#    print(summ1/count1)
+#    print("|||||||||||||||| ALL |||||||||||||||")
+#    print(summ)
+#    print(count)
+#    print(summ/count)
+#    print("||||||||||||||||||||||||||||||||||||")
     return common.PrecisionRecallModel(precisionList, recallList)
 
-def showChart(dataAxis, returnModel, name):
-    lenght = len(dataAxis)
-    pointInterval = int(lenght/(CHART_POINT_COUNT-1))
-    
-    pointPrecision = []
-    pointRecall = []
-    
-    pointPrecision.append(returnModel.precision[10])
-    pointRecall.append(returnModel.recall[10])
-    for i in range((CHART_POINT_COUNT-1)):
-        it = (i + 1)  * pointInterval
-        pointPrecision.append(returnModel.precision[it])
-        pointRecall.append(returnModel.recall[it])
-
-    fig = plt.figure()
-    ax = fig.add_subplot(111)    # The big subplot
-    
-    ax.set_ylabel('Recall')
-    ax.set_xlabel('Precision')
-
-    plt.plot(pointPrecision, pointRecall)
-    plt.show()
+def showChart(returnModel, name):
+#    lenght = len(returnModel.precision)
+#    pointInterval = int(lenght/(CHART_POINT_COUNT-1))
+#    
+#    pointPrecision = []
+#    pointRecall = []
+#    
+#    pointPrecision.append(returnModel.precision[10])
+#    pointRecall.append(returnModel.recall[10])
+#    for i in range((CHART_POINT_COUNT-1)):
+#        it = (i + 1)  * pointInterval
+#        pointPrecision.append(returnModel.precision[it])
+#        pointRecall.append(returnModel.recall[it])
+#
+#    fig = plt.figure()
+#    ax = fig.add_subplot(111)    # The big subplot
+#    
+#    ax.set_ylabel('Recall')
+#    ax.set_xlabel('Precision')
+#
+#    plt.plot(pointPrecision, pointRecall)
+#    plt.show()
     print(name + " " + str(returnModel.recall[len(returnModel.precision) - 1]))
     
+
+def mainFuction(udataArray, testFactorList):
+    start = time.time()
+    for i in range(len(testFactorList)):
+        
+        testFactor = testFactorList[i]
+        trainingArray, testArray = datasetGenerator.splitDataset(udataArray, testFactor)
+        
+        print("")
+        print("TEST FACTOR: " + str(testFactor))
+        
+        randomRecomendationSystemModel = randomRS.getRandomRSPrecisionRecall(testArray)
+        similarModel = getTasteSimilarRSPrecisionRecall(trainingArray, testArray)
+        averageBasedRecomendationSystemModel = averageRatingRS.getAverageRatingBasedRSPrecisionRecall(trainingArray, testArray)
+        
+        showChart(randomRecomendationSystemModel, "random")
+        showChart(averageBasedRecomendationSystemModel, "average")
+        showChart(similarModel, "similar")
+    end = time.time()
+    print("time: " + str(end - start))
+    
+    
 #|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-
-test_udata_array = common.loadUdata('test.txt')
-base_udata_array = common.loadUdata('base.txt')
-
-data = np.arange(len(test_udata_array))
-
-start = time.time()
-similarModel = getTasteSimilarRSPrecisionRecall(base_udata_array, test_udata_array)
-end = time.time()
-print("time: " + str(end - start))
-
-randomRecomendationSystemModel = randomRS.getRandomRSPrecisionRecall(test_udata_array)
-averageBasedRecomendationSystemModel = averageRatingRS.getAverageRatingBasedRSPrecisionRecall(base_udata_array, test_udata_array)
-
-showChart(data, randomRecomendationSystemModel, "random")
-showChart(data, averageBasedRecomendationSystemModel, "average")
-showChart(data, similarModel, "similar")
+    
+udata_array = common.loadUdataWithTimestamp('u.data')
+np.random.shuffle(udata_array)
+testFactorList = [0.2, 0.4, 0.5, 0.6, 0.8]
+#testFactorList = [0.5]
+mainFuction(udata_array, testFactorList)
