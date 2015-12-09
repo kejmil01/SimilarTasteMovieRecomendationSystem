@@ -231,19 +231,23 @@ def showChart(dataAxis, returnModel, name):
     lenght = len(dataAxis)
     pointInterval = int(lenght/(CHART_POINT_COUNT-1))
     
-    pointDataAxis = []
     pointPrecision = []
     pointRecall = []
-    pointPrecisionRecall = []
     
+    pointPrecision.append(returnModel.precision[10])
+    pointRecall.append(returnModel.recall[10])
     for i in range((CHART_POINT_COUNT-1)):
         it = (i + 1)  * pointInterval
-        pointDataAxis.append(dataAxis[it])
         pointPrecision.append(returnModel.precision[it])
         pointRecall.append(returnModel.recall[it])
-        pointPrecisionRecall.append((returnModel.precision[it] + returnModel.recall[it])/2)
 
-    plt.plot(pointDataAxis, pointPrecision, 'ro', pointDataAxis, pointPrecisionRecall, "y", pointDataAxis, pointRecall, "go")
+    fig = plt.figure()
+    ax = fig.add_subplot(111)    # The big subplot
+    
+    ax.set_ylabel('Recall')
+    ax.set_xlabel('Precision')
+
+    plt.plot(pointPrecision, pointRecall)
     plt.show()
     print(name + " " + str(returnModel.recall[len(returnModel.precision) - 1]))
     
